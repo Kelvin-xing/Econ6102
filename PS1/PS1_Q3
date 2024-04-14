@@ -1,1 +1,127 @@
-
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "## import libraries\n",
+    "import numpy as np\n",
+    "import pandas as pd\n",
+    "import matplotlib.pyplot as plt\n",
+    "import seaborn as sns\n",
+    "from sklearn.model_selection import train_test_split\n",
+    "from sklearn.linear_model import LinearRegression\n",
+    "from sklearn.linear_model import LassoCV\n",
+    "from sklearn.metrics import mean_squared_error\n",
+    "import zipfile\n",
+    "\n",
+    "import statsmodels.api as sm\n",
+    "from statsmodels.regression.rolling import RollingOLS\n",
+    "\n",
+    "\n",
+    "sns.set_style(\"darkgrid\")\n",
+    "pd.plotting.register_matplotlib_converters()\n",
+    "%matplotlib inline"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "## data extraction\n",
+    "zip_path = \"Data-20240401.zip\"\n",
+    "\n",
+    "with zipfile.ZipFile(zip_path, 'r') as zip:\n",
+    "    zip.extractall()\n",
+    "\n",
+    "FF5 = pd.read_csv('FF5_2000_2022.csv')\n",
+    "CRSP = pd.read_csv('CRSP_2000_2022.csv')\n",
+    "PS = pd.read_csv('PS_2000_2022.csv')\n",
+    "HXZ5 = pd.read_csv('HXZ5_2000_2022.csv')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Data preparation, define df = dataframe with all the factors\n",
+    "df = (FF5\n",
+    "            .merge(HXZ5, on='YYYYMM')\n",
+    "            .drop(columns=['R_MKT','R_F','RF'])\n",
+    "            .merge(PS, on='YYYYMM',how='left')\n",
+    "            .set_index('YYYYMM')\n",
+    ")\n",
+    "exog_vars = ['Mkt-RF', 'SMB', 'HML', 'RMW', 'CMA', 'R_ME', 'R_IA', 'R_ROE', 'R_EG', 'AggLiq', 'eq8', 'LIQ_V']\n",
+    "df.tail()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from sklearn.linear_model import LassoCV\n",
+    "\n",
+    "# Data preparation\n",
+    "y = CRSP.loc[CRSP['PERMNO'] == 10324, 'MthRet'].set_axis(CRSP.loc[CRSP['PERMNO'] == 10324, 'YYYYMM'])\n",
+    "exog = df.loc[y.index, exog_vars]\n",
+    "\n",
+    "# Rolling window regression\n",
+    "window_size = 60\n",
+    "n_periods = len(y)\n",
+    "n_windows = n_periods - window_size + 1\n",
+    "coefficients = []\n",
+    "\n",
+    "for i in range(n_windows):\n",
+    "    X_train = exog.iloc[i:i+window_size]\n",
+    "    y_train = y.iloc[i:i+window_size]\n",
+    "    \n",
+    "    # Fit LassoCV model\n",
+    "    model = LassoCV(cv=5)\n",
+    "    model.fit(X_train, y_train)\n",
+    "    \n",
+    "    # Store coefficients\n",
+    "    coefficients.append(model.coef_)\n",
+    "\n",
+    "# Convert coefficients to DataFrame\n",
+    "coefficients_df = pd.DataFrame(coefficients, columns=exog_vars)\n",
+    "\n",
+    "# Plot coefficients\n",
+    "coefficients_df.plot(figsize=(12, 6))\n",
+    "plt.xlabel('Window Index')\n",
+    "plt.ylabel('Coefficient Value')\n",
+    "plt.title('Rolling Window Regression - Lasso')\n",
+    "plt.legend(loc='upper right')\n",
+    "plt.show()\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "language_info": {
+   "name": "python"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
