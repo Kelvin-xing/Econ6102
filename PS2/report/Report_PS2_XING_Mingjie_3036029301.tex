@@ -77,9 +77,9 @@
 
 % \tableofcontents
 
-\begin{abstract}
-    This report studies the relationship between monthly stock returns and a set of factors and construct an investment strategy based on various factor models. The report first uses a naive factor regression to estimate the factor loadings of the stock returns. Then, the report uses the Fama-MacBeth regression to estimate the factor risk premia. Finally, the report uses the LASSO regression to select the factors. The report also constructs a mean-variance portfolio based on the factor risk premia.
-\end{abstract}
+% \begin{abstract}
+%     This report studies the relationship between monthly stock returns and a set of factors and construct an investment strategy based on various factor models. The report first uses a naive factor regression to estimate the factor loadings of the stock returns. Then, the report uses the Fama-MacBeth regression to estimate the factor risk premia. Finally, the report uses the LASSO regression to select the factors. The report also constructs a mean-variance portfolio based on the factor risk premia.
+% \end{abstract}
 
 \section{Data}
     \subsection{Description}
@@ -108,14 +108,20 @@
         \caption{Income Distribution After Log Transformation}
         \label{fig:income_log}
     \end{figure}
-    Figure \ref{fig:income_log} shows the distribution of the feature \texttt{income} after the log transformation. The distribution is more symmetric after the transformation.
+
+    Figure \ref{fig:income_log} shows the distribution of the feature \texttt{income} after the log transformation. The distribution is more symmetric after the transformation and helps boost model performance in our exercise.
 
 \section{Model Comparison}
     \subsection{Simple Logistic Model}
 
+    \subsection{Within-Sample Performance}
+    \input{../table/auc_compare.tex}
+    Table \ref{tab:auc_compare}
 
-%% put here a table of the model comparison on AUC
-\section{Conclusion}
+    \subsection{Out-of-Sample Performance}
+    \input{"../table/auc_oos_compare.tex"}
+    Table \ref{tab:auc_oos_compare} 
+
 
 \newpage
 \footnotesize
