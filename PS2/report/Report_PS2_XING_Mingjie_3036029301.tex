@@ -82,8 +82,39 @@
 \end{abstract}
 
 \section{Data}
+    \subsection{Description}
+    \input{"../table/data_description.tex"}
+
+    Table \ref{tab:data_description} shows the summary statistics of the data. The data set contains 13982 observations and 9 variables. The dependent variable is the default label, which is a binary variable indicating whether the individual defaults. 
+
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.8\textwidth]{"../fig/variable_heatmap.png"}
+        \caption{Heat map of the correlation matrix of the variables}
+        \label{fig:variable_heatmap}
+    \end{figure}
+    Figure \ref{fig:variable_heatmap} shows the heat map of the correlation matrix of the features and target. Most of the features are arguably uncorrelated. There is a high correlation between housing and age at 0.55. The correlation between income and education level is 0.51, which captures the wage premium of education.
+    \subsection{Data Preprocessing}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.8\textwidth]{"../fig/income_distribution.png"}
+        \caption{Income Distribution}
+        \label{fig:income_skew}
+    \end{figure}
+    Figure \ref{fig:income_skew} shows the distribution and the skewness of feature \texttt{income}. The distribution is right-skewed. The report uses the log transformation to reduce the skewness of the feature for better performance in models.
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.8\textwidth]{"../fig/income_distribution_log_transform.png"}
+        \caption{Income Distribution After Log Transformation}
+        \label{fig:income_log}
+    \end{figure}
+    Figure \ref{fig:income_log} shows the distribution of the feature \texttt{income} after the log transformation. The distribution is more symmetric after the transformation.
+
+\section{Model Comparison}
+    \subsection{Simple Logistic Model}
 
 
+%% put here a table of the model comparison on AUC
 \section{Conclusion}
 
 \newpage

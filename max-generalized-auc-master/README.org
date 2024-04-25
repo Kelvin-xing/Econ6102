@@ -1,0 +1,510 @@
+Jonathan Hillman and Toby Dylan Hocking, Optimizing ROC Curves with a Sort-Based Surrogate Loss Function for Binary Classification and Changepoint Detection,  [[https://arxiv.org/abs/2107.01285][arXiv:2107.01285]]
+** Replication materials
+This paper proposed a new surrogate loss function, Area Under Min of
+FP and FN (AUM). Minimizing AUM was shown to result in maximizing Area
+Under the ROC Curve (AUC). Reference implementation of Algorithm 1
+(AUM and directional derivative computation) in C++ can be found in [[https://github.com/tdhock/aum/blob/main/src/aum_sort.cpp][R
+package aum]]. AUM implementation in pytorch can be found in
+[[file:figure-aum-neural-networks-data.py]].
+
+Before running some of the replication scripts below, you will need to
+clone the data repositories:
+[[https://github.com/tdhock/feature-learning-benchmark]] and
+[[https://github.com/tdhock/neuroblastoma-data]].
+
+- Figure 1: Example changepoint data with non-monotonic FP. [[file:figure-fn-not-monotonic.png][Left PNG]]
+  (data), [[file:figure-fn-not-monotonic-error.png][Right PNG]] (error), [[file:figure-fn-not-monotonic.R][R code]].
+- Figure 2: synthetic example with AUC greater than one. [[file:figure-more-than-one-more-aum.png][Left PNG]]
+  (AUM), [[file:figure-more-than-one-more-auc.png][right PNG (AUC)]], [[file:figure-more-than-one.R][R code]].
+- Figure 3: real data example with AUC greater than one. [[file:figure-aum-convexity-profiles.png][left PNG]] (error functions),
+  [[file:figure-aum-convexity.png][right PNG (AUM/AUC functions)]], [[file:figure-aum-convexity.R][R code]].
+- Figure 4: optimizing AUM maximizes AUC. [[file:figure-aum-optimized-iterations.png][Left PNG]], [[file:figure-aum-optimized.R][R code]]
+  (iterations); [[file:figure-aum-train-both.png][Right PNG]], [[file:figure-aum-train-both.R][R code]] (ROC curves).
+- Figure 5: Test AUM/AUC comparison across multiple seeds and datasets[[file:figure-test-auc-comparison.png][Top PNG]], [[file:figure-test-aum-comparison.png][Bottom PNG]], [[file:figure-test-comparison.R][R code]]
+- Figure 6: binary classification test AUC. [[file:figure-unbalanced-grad-desc-aum.png][Left PNG]] (Comparing AUM
+  variants), [[file:figure-unbalanced-grad-desc.png][Right PNG]] (AUM compared to baselines), [[file:figure-aum-grad-speed-random.png][Right PNG]], [[file:figure-unbalanced-grad-desc.R][R code]].
+- Figure 7: [[file:figure-aum-neural-networks-test-auc.png][PNG]] (Test AUC of neural network for image classification),
+  [[file:figure-aum-neural-networks.R][R code]].
+- Figure 8: speed comparison. [[file:figure-aum-grad-speed-both.png][PNG]], [[file:figure-aum-grad-speed.R][R code]].
+
+** Interactive figures
+
+[[file:figure-aum-convexity-interactive.png]] 
+
+Interactive version:
+http://ml.nau.edu/viz/2021-11-12-aum-convexity/
+
+Source:
+[[file:figure-aum-convexity-interactive.R]] 
+
+- [[http://ml.nau.edu/viz/2019-08-19-curveAlignment-aub-deriv/][Aligning two error curves (peak detection)]].
+- [[http://ml.nau.edu/viz/2021-10-21-neuroblastomaProcessed-complex/][8 error curves with 2 different alignments]].
+- [[http://ml.nau.edu/viz/2019-08-16-generalized-roc/][Some ROC curves with AUC>1.]]
+
+[[file:figure-auc-improved-interactive.R]]  
+  
+- [[http://ml.nau.edu/viz/2019-08-20-min-area-under-min-fp-fn/][Minimizing area under min(FP,FN) usually maximizes AUC]].
+
+** 21 Nov 2023
+
+[[file:figure-more-than-one.R]] modified to make heat map version of SM
+figure, and rate version of AUM:
+
+[[file:figure-more-than-one-binary-heat.png]]
+
+[[file:figure-more-than-one-binary-aum-rate.png]]
+
+** 4 May 2023
+
+JSM Slides "Efficient line search optimization of penalty functions in
+  supervised changepoint detection," [[file:HOCKING-slides-toronto.pdf][PDF]], [[file:HOCKING-slides-toronto.tex][LaTeX source]].
+
+[[file:figure-line-search-example.R]] make figure/demo for new
+paper/slides.
+
+[[file:figure-line-search-interactive.R]] makes new interactive figure
+showing line search.
+
+[[file:figure-line-search-complexity-compare.R]] studies asymptotic
+complexity of different versions of line search.
+
+[[file:figure-line-search-complexity-compare-steps-refs.png]]
+
+[[file:figure-line-search-complexity-compare-iterations-refs.png]]
+
+[[file:figure-line-search-complexity-compare-iterations.png]]
+
+[[file:figure-line-search-complexity-compare-seconds-refs.png]]
+
+[[file:figure-line-search-complexity-compare-seconds.png]]
+
+[[file:figure-line-search-complexity-compare-H3K4me3_TDH_immune-equal_labels-rate-IntervalRegressionCV.png]]
+
+
+[[file:figure-line-search-complexity-compare-H3K4me3_TDH_immune-equal_labels-rate-IntervalRegressionCV-initial.png]]
+
+
+[[file:figure-line-search-complexity-compare-H3K4me3_TDH_immune-equal_labels-rate-IntervalRegressionCV-seconds.png]]
+
+** 10 Apr 2023
+
+[[file:figure-line-search-complexity.R]] is a more systematic version of
+this experiment, computing how many iterations it takes to get to a
+min aum step size, https://github.com/tdhock/aum/issues/5
+
+result CSV: [[file:figure-line-search-complexity.csv]] and figure below,
+
+[[file:figure-line-search-complexity.png]]
+
+[[file:figure-line-grid-search-interactive.R]] compares grid search to
+line search with linear number of iterations (same as number of input
+diffs/breakpoints B).
+
+** 7 Nov 2022
+
+[[file:figure-auc-improved.R]] makes figure below which shows one way to
+measure irregularity of ROC curves, via difference with AUC of
+monotonic version.
+
+[[file:figure-auc-improved.png]]
+
+** 19 Aug 2022
+
+[[file:HOCKING-slides-prescott.tex]] makes [[file:HOCKING-slides-prescott.pdf]]
+
+with new figure code [[file:figure-aum-grad-speed-binary.R]] which makes
+
+[[file:figure-aum-grad-speed-binary.png]]
+
+** 19 July 2022
+
+[[file:figure-compare-hinge-loss.R]] makes
+
+[[file:figure-compare-hinge-loss-pairwise-line.png]]
+
+[[file:figure-compare-hinge-loss-squared-pairwise-relative.png]]
+   
+
+[[file:figure-compare-hinge-loss-squared-pairwise.png]]
+   
+
+[[file:figure-compare-hinge-loss-hinge-pairwise-relative.png]]
+   
+
+[[file:figure-compare-hinge-loss-hinge-pairwise.png]]
+   
+** 19 May 2022
+
+New image classification experiment
+[[file:figure-aum-neural-networks-data.py]] adapted from torch AUM code,
+https://tdhock.github.io/blog/2022/aum-learning/
+
+[[file:figure-aum-neural-networks.R]] makes
+
+[[file:figure-aum-neural-networks-test-auc.png]]
+
+** 2 May 2022
+
+Slides for London [[file:HOCKING-slides-london.tex][tex]], [[file:HOCKING-slides-london.pdf][pdf]].
+
+Additional figures in [[file:figure-more-than-one.R]]
+
+[[file:figure-more-than-one-binary-errors.png]]
+
+
+[[file:figure-more-than-one-binary-dots.png]]
+
+
+[[file:figure-more-than-one-binary-aum.png]]
+
+** 3 Feb 2022
+Figure below from [[https://github.com/tdhock/aum/blob/main/vignettes/accuracy-comparison.Rmd][aum package accuracy comparison vignette]] suggests
+that experiments on sonar data could provide convincing evidence of
+superior accuracy.
+
+[[file:figure-from-vignette.png]]
+
+[[file:figure-sonar-comparisons-data.R]] makes
+[[file:figure-sonar-comparisons.csv]]
+
+[[file:figure-sonar-comparisons.R]] reads that and makes
+
+[[file:figure-sonar-comparisons.png]]
+
+[[file:figure-sonar-comparisons-iterations.png]]
+
+** 12 Nov 2021
+
+[[file:figure-aum-convexity-interactive.R]] makes interactive figure
+
+[[file:figure-aum-convexity-interactive.png]]
+
+Interactive versions:
+- 2 Feb 2023, bigger text size http://ml.nau.edu/viz/2021-11-12-aum-convexity/
+- 7 Nov 2021, continuity in pred.diff interaction http://bl.ocks.org/tdhock/raw/e3f56fa419a6638f943884a3abe1dc0b
+- 6 Nov 2021, no continuity in pred.diff interaction http://bl.ocks.org/tdhock/raw/de3979318d5255dd6e21ff907e2f3fb4
+
+** 3 Nov 2021
+
+[[file:HOCKING-slides.tex]] makes [[file:HOCKING-slides.pdf]] for ML lab / Math colloq.
+
+** 24 June 2021
+
+[[file:figure-aum-grad-speed-binary-cpp-data.R]] makes binary classification timing data, [[file:figure-aum-grad-speed-binary-cpp-data.csv]]
+
+[[file:figure-aum-grad-speed-binary-cpp.R]] makes
+
+[[file:figure-aum-grad-speed-binary-cpp-algos.png]]
+
+[[file:figure-aum-grad-speed-binary-cpp.png]]
+
+[[file:figure-aum-grad-speed.R]] updated to make
+
+[[file:figure-aum-grad-speed-both.png]]
+
+** 16 June 2021
+
+[[file:figure-unbalanced-grad-desc.R]] updated to make new figure (useful for slides probly)
+
+[[file:figure-unbalanced-grad-desc-logistic.png]]
+
+** 11 June 2021
+
+Updated [[file:figure-aum-convexity.R]] new figures
+
+[[file:figure-aum-convexity-thresholds.png]]
+
+[[file:figure-aum-convexity-emph.png]]
+
+Updated [[file:figure-aum-grad-speed.R]] new figure
+
+[[file:figure-aum-grad-speed-random.png]]
+
+** 7 June 2021
+
+[[file:figure-aum-grad-speed-binary.R]] makes
+
+[[file:figure-aum-grad-speed-binary.png]]
+
+figure above shows time differences between sorted (linear) and
+unsorted (log-linear) predictions.
+
+figure below shows differences between algos (aum comparable to
+logistic, whether or not predictions are sorted).
+
+[[file:figure-aum-grad-speed-binary-algos.png]]
+
+** 31 May 2021
+
+[[file:figure-aum-grad-speed-data.R]] makes [[file:figure-aum-grad-speed-data.csv]]
+
+[[file:figure-aum-grad-speed.R]] reads that and makes
+
+[[file:figure-aum-grad-speed.png]]
+
+** 26 May 2021
+
+[[file:figure-unbalanced-grad-desc-data.R]] makes [[file:figure-unbalanced-grad-desc-data.rds]]
+
+[[file:figure-unbalanced-grad-desc.R]] reads that and makes
+
+[[file:figure-unbalanced-grad-desc-aum.png]]
+
+The figure above shows that the AUM variant which uses total number of
+errors (count) is more accurate than the AUM variant which uses the
+normalized error (rate).
+
+[[file:figure-unbalanced-grad-desc.png]]
+
+The figure above shows that the AUM is at least as accurate as
+squared.hinge.all.pairs, whereas logistic.weighted is less accurate.
+
+** 25 May 2021
+
+[[file:figure-logistic-weights.R]] makes
+
+[[file:figure-logistic-weights.png]]
+
+This figure shows that cv.glmnet does fine with 5% positive labels,
+but stops learning when we get down to 1% positive labels. This
+suggests that we should try 1% for comparing aum.rate and aum.count.
+
+** 10 Mar 2021
+   
+[[file:figure-DNA-Sonar-subtrain-valid-data.R]] makes 
+
+[[file:figure-DNA-Sonar-subtrain-valid-data.csv.gz]]
+
+[[file:figure-DNA-Sonar-subtrain-valid.R]] analyzes those data.
+
+** 9 Mar 2021
+
+[[file:figure-binary-test-auc-data.R]] makes [[file:figure-binary-test-auc-data.rds]]
+
+[[file:figure-binary-test-auc.R]] makes 
+
+[[file:figure-binary-test-auc.png]]
+
+** 3 Jan 2021
+
+[[file:figure-test-fold-monotonic.R]] makes
+
+#+BEGIN_SRC 
+> meta.dt[, .(data.name, test.fold, features, n.train, mean.breaks)]
+                  data.name test.fold features n.train mean.breaks
+1:          ATAC_JV_adipose         4       29     341    6.665689
+2: H3K27ac-H3K4me3_TDHAM_BP         2       26    1865    4.145845
+3:        H3K4me3_XJ_immune         2       28     216    5.902778
+4:        H3K4me3_XJ_immune         4       28     216    6.134259
+5:               systematic         1      117    3322    1.010235
+> (meta.stats <- meta.tall[, .(
++   min=min(value),
++   max=max(value)
++ ), by=variable])
+      variable        min         max
+1:    features  26.000000  117.000000
+2:     n.train 216.000000 3322.000000
+3: mean.breaks   1.010235    6.665689
+#+END_SRC
+
+** 21 Jan 2021
+[[file:figure-aum-train-both.R]] makes 
+
+[[file:figure-aum-train-both.png]]
+
+[[file:figure-aum-train-data.R]] makes [[file:figure-aum-train-data.rds]]
+
+[[file:figure-aum-train.R]] makes
+
+[[file:figure-aum-train-iterations.png]]
+
+[[file:figure-aum-train.png]]
+
+[[file:figure-aum-optimized-data.R]] makes [[file:figure-aum-optimized-data.rds]]
+
+[[file:figure-aum-optimized.R]] reads those data and makes
+
+[[file:figure-aum-optimized.png]]
+
+[[file:figure-aum-optimized-iterations.png]]
+
+This shows N=54 predicted values with min error, then predicted values
+optimized via aum gradient descent.
+
+- TODO do same with linear model, train error/auc.
+- TODO aum figs?
+
+** 13 Jan 2021
+[[file:figure-binary-class.R]] makes a figure showing what fp/fn curves
+look like for binary class,
+
+[[file:figure-binary-class.png]]
+
+** 12 Jan 2021
+[[file:figure-aum-convexity.R]] makes
+
+[[file:figure-aum-convexity.png]]
+
+[[file:figure-aum-convexity-profiles.png]]
+
+** 8 Jan 2021
+
+[[file:figure-fn-not-monotonic.R]] makes
+
+[[file:figure-fn-not-monotonic.png]]
+
+[[file:figure-fn-not-monotonic-error.png]]
+
+[[file:figure-more-than-one.R]] makes
+
+[[file:figure-more-than-one-less-aum.png]] 
+
+[[file:figure-more-than-one-less-auc.png]]
+
+[[file:figure-more-than-one-more-aum.png]]
+
+[[file:figure-more-than-one-more-auc.png]]
+
+** 2 Sept 2020
+
+[[file:figure-linear-model-test-analyze.R]] makes
+
+[[file:figure-linear-model-test-analyze.png]]
+
+** 25 Aug 2020
+
+Some R scripts for interactive experimentation with grad desc algo for
+learning linear model that minimizes AUM:
+- [[file:figure-linear-model.R]] uses
+  penaltyLearning::IntervalRegressionCV for initialization.
+- [[file:figure-linear-model-zero-init.R]] uses zero vector for init.
+
+R script with OneFold function that computes train/valid/test error,
+can be parallelized over 198 test folds on the cluster:
+- [[file:figure-linear-model-test.R]]
+
+Initial results on two data sets (ATAC, CTCF) show that
+- Train AUM decreases as a function of iterations (each iteration does
+  line search so that is expected).
+
+[[file:figure-linear-model-test-aum-train-decreases.png]]
+
+- IntervalRegressionCV init is much more accurate (in terms of test
+  AUM, AUC, errors) than zero init. Best linear model is not as
+  accurate as best predictions, after running gradient descent on just
+  the predicted values (without linear model).
+
+[[file:figure-linear-model-test-compare-init.png]]
+
+- Using early stopping regularization (select number of iterations
+  with min AUM on validation set) does not decrease test AUM using
+  IntervalRegressionCV initialization.
+
+[[file:figure-linear-model-test-initial-selected.png]]
+
+- The linear model which is best in terms of test AUM, over all
+  iterations, is not much better than the initial iteration, for these
+  two data sets.
+
+[[file:figure-linear-model-test-initial-best.png]]
+
+- Do we see any improvement on other test folds / data sets?
+
+** 16 June 2020
+
+[[file:figure-compare-hinge-loss-data.R]] makes
+[[file:figure-compare-hinge-loss-data.csv]]
+
+[[file:figure-compare-hinge-loss.R]] makes
+
+[[file:figure-compare-hinge-loss.png]]
+
+[[file:figure-compare-hinge-loss-contours.png]]
+
+** 18 May 2020
+
+[[file:figure-neuroblastomaProcessed-combinations.R]] makes new figure
+that highlights counter-examples for the proposition (AUC=1 implies
+AUM=0) and shows that there are no counter-examples for the converse.
+
+[[file:figure-neuroblastomaProcessed-combinations-points.png]]
+
+** 2 Oct 2019
+
+[[file:auc.improved.R]] copied from [[https://github.com/tdhock/feature-learning-benchmark/blob/master/auc.improved.R]]
+
+** 19 Aug 2019
+
+[[file:figure-curveAlignment.R]] computes derivative of area under
+min(fp,fn), updated viz:
+[[http://ml.nau.edu/viz/2019-08-19-curveAlignment-aub-deriv/]]
+
+** 16 Aug 2019
+
+[[file:figure-neuroblastomaProcessed-combinations-interactive.R]] makes
+
+[[http://ml.nau.edu/viz/2019-08-16-generalized-roc/]]
+
+** 6 June 2019
+
+[[file:curveAlignment.R]] and [[file:figure-curveAlignment.R]]
+
+http://members.cbio.mines-paristech.fr/~thocking/figure-max-auc/
+
+** 4 June 2019
+
+[[file:figure-aub-convexity.R]] creates figures which show that the aub
+function is continuous but not convex:
+
+[[file:figure-aub-convexity-heatmap.png]]
+
+[[file:figure-aub-convexity.png]]
+
+** 3 June 2019
+
+[[file:figure-neuroblastomaProcessed-complex-loon.R]] has code for an
+interactive plot using loon.
+
+** 31 May 2019
+
+
+[[file:figure-neuroblastomaProcessed-combinations.R]] creates the
+following figure which plots auc vs aub:
+
+[[file:figure-neuroblastomaProcessed-combinations-scatter.png]]
+
+Note that the min AUM=0 has AUC=1, and the points with AUC>1 have
+AUM>0. Thus minimizing AUM seems like a reasonable criterion.
+
+** 30 May 2019
+
+[[file:figure-neuroblastomaProcessed-complex.R]] creates
+http://members.cbio.mines-paristech.fr/~thocking/figure-neuroblastomaProcessed-complex/
+which shows 8 labeled neuroblastoma data sequences with two different
+ROC curves / predictions. Strangely both achieve 0 errors, but the one
+with predictions in the finite interval has a highly non-monotonic ROC
+curve, and much smaller area inside the ROC polygon.
+
+[[file:figure-neuroblastomaProcessed-combinations.R]] creates the
+following figure which shows the auc values for all of the 2^8 unique
+combinations of predicted values for 8 labeled profiles. 
+
+[[file:figure-neuroblastomaProcessed-combinations.png]]
+
+Each labeled
+profiles has two minima: one in an infinite interval, and one in a
+finite interval. The panel titles show the difference d from the
+infinite interval limit to the predicted value, e.g. (-Inf, 1.2) with
+d=1 results in a predicted value of 0.2. The overall pattern is that d
+is relevant for AUC, in a range 0.001 to 10, but it has no effect
+outside that range. Surprisingly there are AUC values greater than
+zero, which happens when there are cycles. One example is highlighted
+with a circle in the plot above, and the ROC curves are shown below.
+
+[[file:figure-neuroblastomaProcessed-combinations-worst.png]]
+
+** 29 May 2019
+
+[[https://github.com/tdhock/neuroblastoma-data/blob/master/figure-max-auc.R]]
+creates http://members.cbio.mines-paristech.fr/~thocking/figure-max-auc/
+
