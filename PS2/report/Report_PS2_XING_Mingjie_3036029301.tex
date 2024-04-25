@@ -159,8 +159,7 @@
     Table \ref{tab:auc_oos_compare} reports the baseline (default parameter suggested by the package) out-of-sample performance of each model in the \texttt{auc} column. The full logistic model has the best performance with an AUC of 0.686. The SVM model with RBF kernel has a lowest AUC of 0.518. 
 
     \subsubsection{Hypertuning}
-    \input{"../table/hyperparam.tex"}
-    Table \ref{tab:hyperparam} reports the baseline, hypertuned parameters, and best parameters. We leverage \texttt{GridSearchCV} to hypertune the models to maximize out-of-sample roc-auc performance. We provide a dictionary of hyperparameters to each model and do cross validation of 5-fold. As we can see from the \texttt{auc\_tuned} column of table \ref{tab:auc_oos_compare}, after hypertuning there is generally a 10\% increase in the performance of each model. The best performer is still the Logistic model, though with only marginal improvement.
+    The baseline, hypertuned parameters, and best parameters are reported in the jupyter notebook. We leverage \texttt{GridSearchCV} to hypertune the models to maximize out-of-sample roc-auc performance. We provide a dictionary of hyperparameters to each model and do cross validation of 5-fold. As we can see from the \texttt{auc\_tuned} column of table \ref{tab:auc_oos_compare}, after hypertuning there is generally a 10\% increase in the performance of each model. The best performer is still the Logistic model, though with only marginal improvement.
     
 
 

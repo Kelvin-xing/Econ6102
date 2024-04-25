@@ -1,5 +1,12 @@
 # Fdb version 3
-["pdflatex"] 1714048123 "/Users/mingjiexing/Desktop/Python/Macro/Econ6102/PS2/report/Report_PS2_XING_Mingjie_3036029301.tex" "Report_PS2_XING_Mingjie_3036029301.pdf" "Report_PS2_XING_Mingjie_3036029301" 1714048123
+["bibtex Report_PS2_XING_Mingjie_3036029301"] 1714050812 "Report_PS2_XING_Mingjie_3036029301.aux" "Report_PS2_XING_Mingjie_3036029301.bbl" "Report_PS2_XING_Mingjie_3036029301" 1714050813
+  "/usr/local/texlive/2022/texmf-dist/bibtex/bst/base/apalike.bst" 1292289607 24635 604dafcc79f521a11ea73e506e1fbd98 ""
+  "Report_PS2_XING_Mingjie_3036029301.aux" 1714050813 4452 fe47ea2318cee5210bc587e1b64bbcfd "pdflatex"
+  "ref.bib" 1714042309 7436 6559c4765a5184f362330a09d4d3b1a0 ""
+  (generated)
+  "Report_PS2_XING_Mingjie_3036029301.bbl"
+  "Report_PS2_XING_Mingjie_3036029301.blg"
+["pdflatex"] 1714050812 "/Users/mingjiexing/Desktop/Python/Macro/Econ6102/PS2/report/Report_PS2_XING_Mingjie_3036029301.tex" "Report_PS2_XING_Mingjie_3036029301.pdf" "Report_PS2_XING_Mingjie_3036029301" 1714050813
   "../fig/income_distribution.png" 1714046551 43722 0d2f8e879e7d813109f586ff6b4c62d6 ""
   "../fig/income_distribution_log_transform.png" 1714046552 45283 5df1eea15931ef1360e141618d52e413 ""
   "../fig/roc_curve_Full_Logistic.png" 1714046554 23202 6df6a77f4c3374ce1c9fc808c072d975 ""
@@ -12,8 +19,7 @@
   "../table/auc_compare.tex" 1714048020 384 02d5abe9cddc2b33d47d5dfe63c74f0b ""
   "../table/auc_oos_compare.tex" 1714048020 340 01eedebc5b63bc367d9d2d537a06ce7b ""
   "../table/data_description.tex" 1714046550 749 fa1072b4886a797aaa2a0d0ceb90b04d ""
-  "../table/hyperparam.tex" 1714048020 2836 dc222a10dc6bc26df939da9ffdde68c9 ""
-  "/Users/mingjiexing/Desktop/Python/Macro/Econ6102/PS2/report/Report_PS2_XING_Mingjie_3036029301.tex" 1714048121 9002 90ea7494dd3bfc52f1cc911dd1ed7d4c ""
+  "/Users/mingjiexing/Desktop/Python/Macro/Econ6102/PS2/report/Report_PS2_XING_Mingjie_3036029301.tex" 1714050810 8966 9f7319c725f6e42fb9933bf6c03bb9bc ""
   "/usr/local/texlive/2022/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
   "/usr/local/texlive/2022/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1246382020 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -36,7 +42,16 @@
   "/usr/local/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmsy10.tfm" 1136768653 1124 6c73e740cf17375f03eec0ee63599741 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmsy6.tfm" 1136768653 1116 933a60c408fc0a863a92debe84b2d294 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmsy8.tfm" 1136768653 1120 8b7d695260f3cff42e636090a8002094 ""
+  "/usr/local/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmti8.tfm" 1136768653 1504 1747189e0441d1c18f3ea56fafc1c480 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmtt10.tfm" 1136768653 768 1321e9409b4137d6fb428ac9dc956269 ""
+  "/usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb" 1248133631 34811 78b52f49e893bcba91bd7581cdc144c0 ""
+  "/usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb" 1248133631 32080 340ef9bf63678554ee606688e7b5339d ""
+  "/usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1248133631 35752 024fb6c41858982481f6968b5fc26508 ""
+  "/usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb" 1248133631 32722 d7379af29a190c3f453aba36302ff5a9 ""
+  "/usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb" 1248133631 32362 179c33bbf43f19adbb3825bb4e36e57a ""
+  "/usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1248133631 32726 0a1aea6fcd6468ee2cf64d891f5c43c8 ""
+  "/usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti8.pfb" 1248133631 35660 fb24af7afbadb71801619f1415838111 ""
+  "/usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb" 1248133631 31099 c85edf1dd5b9e826d67c9c7293b6786c ""
   "/usr/local/texlive/2022/texmf-dist/tex/context/base/mkii/supp-pdf.mkii" 1461363279 71627 94eb9990bed73c364d7f53f960cc8c5b ""
   "/usr/local/texlive/2022/texmf-dist/tex/generic/atbegshi/atbegshi.sty" 1575674566 24708 5584a51a7101caf7e6bbf1fc27d8f7b1 ""
   "/usr/local/texlive/2022/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty" 1576625341 40635 c40361e206be584d448876bba8a64a3b ""
@@ -119,8 +134,9 @@
   "/usr/local/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1647878959 4410336 7d30a02e9fa9a16d7d1f8d037ba69641 ""
   "/usr/local/texlive/2022/texmf-var/web2c/pdftex/pdflatex.fmt" 1663576759 2826438 1ae54c060c8f7bb1b3b78240a682546f ""
   "/usr/local/texlive/2022/texmf.cnf" 1647878952 577 209b46be99c9075fd74d4c0369380e8c ""
-  "Report_PS2_XING_Mingjie_3036029301.aux" 1714048123 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
-  "Report_PS2_XING_Mingjie_3036029301.tex" 1714048121 9002 90ea7494dd3bfc52f1cc911dd1ed7d4c ""
+  "Report_PS2_XING_Mingjie_3036029301.aux" 1714050813 4452 fe47ea2318cee5210bc587e1b64bbcfd "pdflatex"
+  "Report_PS2_XING_Mingjie_3036029301.bbl" 1714050812 478 f16052ecd08a80f377903857097cac25 "bibtex Report_PS2_XING_Mingjie_3036029301"
+  "Report_PS2_XING_Mingjie_3036029301.tex" 1714050810 8966 9f7319c725f6e42fb9933bf6c03bb9bc ""
   (generated)
   "Report_PS2_XING_Mingjie_3036029301.aux"
   "Report_PS2_XING_Mingjie_3036029301.log"
