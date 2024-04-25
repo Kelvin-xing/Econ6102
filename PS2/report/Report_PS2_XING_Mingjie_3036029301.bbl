@@ -1,3 +1,14 @@
 \begin{thebibliography}{}
 
+\bibitem[Bazzana et~al., 2023]{Bazzanaetal2023}
+Bazzana, F., Bee, M., and Hussin Adam~Khatir, A.~A. (2023).
+\newblock Machine learning techniques for default prediction: an application to
+  small italian companies.
+\newblock {\em Risk Management}, 26(1):1.
+
+\bibitem[Wu, 2022]{Wu2022}
+Wu, W. (2022).
+\newblock Machine learning approaches to predict loan default.
+\newblock {\em Intelligent Information Management}, 14:157--164.
+
 \end{thebibliography}

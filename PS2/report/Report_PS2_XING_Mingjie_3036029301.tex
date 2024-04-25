@@ -27,7 +27,7 @@
 \usepackage{array} % for better arrays (eg matrices) in maths
 \usepackage{paralist} % very flexible & customisable lists (eg. enumerate/itemize, etc.)
 \usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
-\usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
+\usepackage{subfigure} % make it possible to include more than one captioned figure/table in a single float
 % These packages are all incorporated in the memoir class to one degree or another...
 \usepackage[fleqn]{amsmath}
 \usepackage{amssymb}
@@ -39,6 +39,7 @@
 \usepackage{blindtext}
 \usepackage{titlesec}
 \usepackage[table,xcdraw]{xcolor}
+\usepackage{{multirow}}
 
 
 %%% HEADERS & FOOTERS
@@ -77,9 +78,7 @@
 
 % \tableofcontents
 
-% \begin{abstract}
-%     This report studies the relationship between monthly stock returns and a set of factors and construct an investment strategy based on various factor models. The report first uses a naive factor regression to estimate the factor loadings of the stock returns. Then, the report uses the Fama-MacBeth regression to estimate the factor risk premia. Finally, the report uses the LASSO regression to select the factors. The report also constructs a mean-variance portfolio based on the factor risk premia.
-% \end{abstract}
+
 
 \section{Data}
     \subsection{Description}
@@ -113,14 +112,56 @@
 
 \section{Model Comparison}
     \subsection{Simple Logistic Model}
+    \begin{figure}
+        \centering
+        \subfigure[Panel A]{\includegraphics[width=0.4\textwidth]{"../fig/roc_curve_Simple Logistic.png"}}
+        \hfill
+        \subfigure[Panel B]{\includegraphics[width=0.4\textwidth]{"../fig/roc_curve_Logistic_with_log_income.png"}}
+        \caption{ROC Curve of Simple Logistic Model}
+        \label{fig:roc_simlogistic}
+    \end{figure}
+
+    Panel A of figure \ref{fig:roc_simlogistic} shows the ROC curve of the simple logistic regression model with feature \texttt{past\_bad\_credit} and \texttt{income} and the Panel B is the simple model with log-transformed \texttt{income}. The AUC is 0.56 for simple model, and 0.59 for simple logistic with log-transformed income. The predictive power is close to a random draw, but the log transformation add to the performance of model. In the rest of the exercise, we use the log-transformed income instead of the original income.
+
+    \subsection{Full Logistic Model}
+
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.8\textwidth]{"../fig/roc_curve_Full_Logistic.png"}
+        \caption{ROC Curve of Full Logistic Regression}
+        \label{fig:roc_fulllogistic}
+    \end{figure}
+    In a full logistic model with log-transformed income in Figure \ref{fig:roc_fulllogistic}, we have an AUC of 0.69, which is a significant improvement over the simple model. The full model includes all the features in the data set. 
+    
+    \subsection{non-linear models}
+    \begin{figure}
+        \centering
+        \subfigure{\includegraphics[width=0.3\textwidth]{"../fig/roc_curve_SVM_RBF.png"}}
+        \hfill
+        \subfigure{\includegraphics[width=0.3\textwidth]{"../fig/roc_curve_SVM_Sigmoid.png"}}
+        \hfill
+        \subfigure{\includegraphics[width=0.3\textwidth]{"../fig/roc_curve_SVM_Polynomial.png"}}
+        \caption{SVM with RBF, sigmoid, polynomial kernel}
+        \label{fig:three_svm}
+    \end{figure}
+
+    This part reports the non-linear models.
+    The SVM model with RBF as kernel has an AUC of 0.67, with sigmoid 0.45, with polynomial 0.64, as reported in Figure \ref{fig:three_svm}. The RBF kernel has the best performance among the three kernels. Sigmoid performs even worse than random classification. In the rest of the exercise, we use the RBF kernel for SVM.
+
+    In the literature, \cite{Bazzanaetal2023} and \cite{Wu2022} proposes Neural Network, XGBoosting and Random Forest as the best predictive algorithms for default risk, with AUC around 0.97.
 
     \subsection{Within-Sample Performance}
     \input{../table/auc_compare.tex}
-    Table \ref{tab:auc_compare}
+    Table \ref{tab:auc_compare} reports the with-in sample of each model as we discussed above. The two best performers are Random Forest and XGBoosting, with AUC of 1 and 0.98, showing an overfitting problem. The rest part of the report focuses on hypertuning models to improve the out-of-sample performance. 
 
     \subsection{Out-of-Sample Performance}
     \input{"../table/auc_oos_compare.tex"}
-    Table \ref{tab:auc_oos_compare} 
+    Table \ref{tab:auc_oos_compare} reports the baseline (default parameter suggested by the package) out-of-sample performance of each model in the \texttt{auc} column. The full logistic model has the best performance with an AUC of 0.686. The SVM model with RBF kernel has a lowest AUC of 0.518. 
+
+    \subsubsection{Hypertuning}
+    \input{"../table/hyperparam.tex"}
+    Table \ref{tab:hyperparam} reports the baseline, hypertuned parameters, and best parameters. We leverage \texttt{GridSearchCV} to hypertune the models to maximize out-of-sample roc-auc performance. We provide a dictionary of hyperparameters to each model and do cross validation of 5-fold. As we can see from the \texttt{auc\_tuned} column of table \ref{tab:auc_oos_compare}, after hypertuning there is generally a 10\% increase in the performance of each model. The best performer is still the Logistic model, though with only marginal improvement.
+    
 
 
 \newpage
