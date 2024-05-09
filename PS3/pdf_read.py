@@ -5,7 +5,8 @@ Spyder Editor
 This is a temporary script file.
 """
 import os
-from PyPDF2 import PdfReader, PdfFileWriter
+from PyPDF2 import PdfFileReader, PdfFileWriter
+#from nltk.corpus import stopwords 
 from nltk.corpus import stopwords 
 from nltk.tokenize import word_tokenize 
 stop_words = set(stopwords.words('english')) 
@@ -15,21 +16,21 @@ import json
 
 infn = 'infn.pdf'
 outfn = 'outfn.pdf'
-# 获取一个 PdfReader 对象
+# 获取一个 PdfFileReader 对象
 
 
 
 def read_pdf(file_name):
-    pdf_input = PdfReader(open(file_name, 'rb'))
+    pdf_input = PdfFileReader(open(file_name, 'rb'))
     # 获取 PDF 的页数
-    page_count = len(pdf_input.pages)
+    page_count = pdf_input.getNumPages()
     print("page number", page_count)
     # 返回一个 PageObject
-    page = pdf_input.pages[0]
+    page = pdf_input.getPage(0)
     count=0
     page_content=""
     for page in pdf_input.pages:
-        page_content += page.extract_text()
+        page_content += page.extractText()
     return page_content
         #print(page_content+"\n")
 
@@ -188,8 +189,7 @@ def parse_name_entity(sentence,analyst_info,company,year):
 #name, company = parse_name_entity("We'll go next to Paul Coster with J.P. Morgan.")
 #print(name, company)
 #print("extraction complete")
-
-
+    
 
 
 
@@ -208,7 +208,7 @@ def para_extraction(paras,company,year):
     for para in paras:
         if len(para) == 0:
             continue
-        if para[0] != "<":
+        if para[0] is not "<":
             if para_count==0:
                 #extract name and agency
                 temp_Q_name, temp_Q_agency  = parse_name_entity(para, analyst_info,company,year)
